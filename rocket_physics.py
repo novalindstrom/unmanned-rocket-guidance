@@ -1,12 +1,11 @@
 # This file will contain functions that do all calculations and logic - without simulations
 import numpy as np
-import matplotlib.pylplot as plt
+
+# ------------ Helper - functions ------------
+# Kolla på de funktioner som ges i instruktionen??
 
 
-
-
-
-
+# ------------ Numeric solver ------------
 def RK4_model(f, h, t, y0):
     y = np.zeros((len(t), len(y0)))
     y[0] = y0
@@ -23,5 +22,5 @@ def RK4_model(f, h, t, y0):
 
     return t, y
 
-# Anropas: 
+# Anropas typ : 
 # t, y = RK4_model(ODE, steglängd, tspan, begynnelse villkoret)
