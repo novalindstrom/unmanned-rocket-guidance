@@ -1,5 +1,9 @@
+# This file will contain functions that do all calculations and logic - without simulations
 import numpy as np
 import matplotlib.pylplot as plt
+
+
+
 
 
 
