@@ -16,7 +16,8 @@ motortid = 10
 bransletank = 1 #behövs en sådan?
 # ------------ Helper - functions ------------
 # Kolla på de funktioner som ges i instruktionen??
-
+def angle(t):
+    return 0
 #retunerar massan beroende på förbränt bränsle
 def m(motortid): # motorn på 10 secunder förbränning, while eller bara en tillbaka?
     if motortid == 0:
@@ -25,9 +26,12 @@ def m(motortid): # motorn på 10 secunder förbränning, while eller bara en til
         motortid = motortid-1
         return 8 - 0.4*(motortid + 1) #detta är bara vid t-steget
 
-def u(x,y):
+def uvec(t):
     u=np.zeros(2)
-    return 0
+    u[0] = k * np.cos(angle(t))
+    u[1] = k * np.sin(angle(t))
+    return u
+
 
 def F(t):
     return m(t) * g - c(v(t)*v(t))
