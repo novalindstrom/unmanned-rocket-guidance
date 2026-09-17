@@ -16,6 +16,8 @@ motortid = 10
 bransletank = 1 #behövs en sådan?
 # ------------ Helper - functions ------------
 # Kolla på de funktioner som ges i instruktionen??
+
+#retunerar massan beroende på förbränt bränsle
 def m(motortid): # motorn på 10 secunder förbränning, while eller bara en tillbaka?
     if motortid == 0:
         return 4
