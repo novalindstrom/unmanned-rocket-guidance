@@ -1,11 +1,41 @@
 # This file will contain functions that do all calculations and logic - without simulations
 import numpy as np
 
+# ------------ Constants ---------------------
+k = 700 #m/s som kraft
+#     funktion av t och anger riktning och
+#   fart av bränslet som skjuts ut från raketen. Vi kan anta att ¯u(t) är en känd
+#   funktion som piloten (du) kan använda för att styra raketen i en önskad bana.
+
+R0 = [0,0] #startposition
+v0 = [0,0]
+c = 0.05 #kg/m
+Ang0 = (np.pi)/2 #startvinkel som ej får ändras innan 20m
+motortid = 10
+
+bransletank = 1 #behövs en sådan?
 # ------------ Helper - functions ------------
 # Kolla på de funktioner som ges i instruktionen??
 
+#retunerar massan beroende på förbränt bränsle
+def m(motortid): # motorn på 10 secunder förbränning, while eller bara en tillbaka?
+    if motortid == 0:
+        return 4
+    else:
+        motortid = motortid-1
+        return 8 - 0.4*(motortid + 1) #detta är bara vid t-steget
 
-# ------------ Numeric solver ------------
+def u(x,y):
+    u=np.zeros(2)
+    return 0
+
+def F(t):
+    return m(t) * g - c(v(t)*v(t))
+
+def um(t): #hastighetsvektor
+
+
+# ------------ Numeric solver ----------------
 def RK4_model(f, h, t, y0):
     y = np.zeros((len(t), len(y0)))
     y[0] = y0
