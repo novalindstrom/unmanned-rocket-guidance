@@ -24,3 +24,23 @@ def RK4_model(f, h, t, y0):
 
 # Anropas typ : 
 # t, y = RK4_model(ODE, steglängd, tspan, begynnelse villkoret)
+
+#---------Skal av idé till raketens riktning
+
+def rocket_moves(t, y):
+    yder = np.zeros(4)
+    x_position = y[0] # X positionen för var tidssteg
+    y_position = y[1] # Y postitionen dvs höjden för var tidssteg
+    x_hastighet = y[2] # derivatan av y är hastigheten
+    y_hastighet = y[3]
+
+    height = y_position # då det är y positionen i varje tidssteg i vår RK modell
+
+    if height < 20:
+        rocket_angle = np.pi / 2
+    else:
+        # rocket_angle = 
+                # här skulle vi kunna räkna ut vinkeln från nyvarande plats till målet med arctan maybe
+                # eller testa en konstant vinkel
+   
+   # sedan kolla hur mycket bränsle vi har 
