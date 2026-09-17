@@ -12,4 +12,6 @@ import matplotlib.pyplot as plt
 
 endPoint = (60, 80)
 plt.plot(endPoint, 'r')
+plt.legend()
+plt.grid(True)
 plt.show()
