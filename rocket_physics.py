@@ -13,6 +13,8 @@ c = 0.05 #kg/m
 Ang0 = (np.pi)/2 #startvinkel som ej får ändras innan 20m
 g = 9.18 # gravitation
 motortid = 10
+g = 9.82 #gravitation
+sträcka = 0 #tom variabel just nu
 
 bransletank = 1 #behövs en sådan?
 
@@ -28,12 +30,14 @@ def m(t): # motorn på 10 secunder förbränning, while eller bara en tillbaka?
 
     return 4 , 0 #retunerar massan när 10s har gått, då är förändringshastighet 0
 
-def uvec(t):
+def uvec(t): 
     u=np.zeros(2)
     u[0] = k * np.cos(rocket_moves(y_pos))
     u[1] = k * np.sin(rocket_moves(y_pos))
     return u
 
+def v(t):
+    return sträcka/t
 
 # hastigheten = v
 # rocket_der = [x(t), y(t), Vx(t), Yx(t)]
