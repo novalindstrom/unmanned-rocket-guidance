@@ -12,6 +12,8 @@ v0 = [0,0]
 c = 0.05 #kg/m
 Ang0 = (np.pi)/2 #startvinkel som ej får ändras innan 20m
 motortid = 10
+g = 9.82 #gravitation
+sträcka = 0 #tom variabel just nu
 
 bransletank = 1 #behövs en sådan?
 # ------------ Helper - functions ------------
@@ -19,24 +21,28 @@ bransletank = 1 #behövs en sådan?
 def angle(t):
     return 0
 #retunerar massan beroende på förbränt bränsle
-def m(motortid): # motorn på 10 secunder förbränning, while eller bara en tillbaka?
+def m(t): # motorn på 10 secunder förbränning, while eller bara en tillbaka?
+
     if motortid == 0:
-        return 4
+        return 4, 0
     else:
         motortid = motortid-1
-        return 8 - 0.4*(motortid + 1) #detta är bara vid t-steget
+        return 8 - 0.4*(motortid + 1), -0.4 #detta är bara vid t-steget
 
-def uvec(t):
+def uvec(t): 
     u=np.zeros(2)
     u[0] = k * np.cos(angle(t))
     u[1] = k * np.sin(angle(t))
     return u
 
+def v(t):
+    return sträcka/t
 
 def F(t):
     return m(t) * g - c(v(t)*v(t))
 
 def um(t): #hastighetsvektor
+    return 0 
 
 
 # ------------ Numeric solver ----------------
