@@ -14,6 +14,8 @@ c = 0.05 #kg/m
 Ang0 = (np.pi)/2 #startvinkel som ej får ändras innan 20m
 g = 9.81 # gravitation
 motortid = 10
+g = 9.82 #gravitation
+sträcka = 0 #tom variabel just nu
 
 bransletank = 1 #behövs en sådan?
 
@@ -35,6 +37,8 @@ def uvec(t):
     u[1] = k * np.sin(rocket_moves(y_pos))
     return u
 
+def v(t):
+    return sträcka/t
 
 # hastigheten = v
 # rocket_der = [x(t), y(t), Vx(t), Yx(t)]
