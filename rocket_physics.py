@@ -34,8 +34,10 @@ def um(t, y): #hastighetsvektor
 
 
 #-------------- Get steering angle --------------
-def get_angle(t, y):
+def get_angle(x_pos, y_pos):
     x_pos, y_pos, vx, vy = y 
+    
+
 
 def rocket_moves(y_pos):
     if y_pos < 20:
