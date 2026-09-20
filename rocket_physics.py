@@ -9,7 +9,9 @@ import matplotlib.pyplot as plt
 k = 700 # m/s som kraft
 c = 0.05 # kg/m
 g = 9.81 # gravitation
-Ang0 = (np.pi)/2 #startvinkel som ej får ändras innan 20m
+motortid = 10
+g = 9.82 #gravitation
+sträcka = 0 #tom variabel just nu
 
 # ----------TODO: ta bort?? --------------------
 motortid = 10
@@ -31,6 +33,8 @@ def uvec(t, y):
     u[1] = k * np.sin(rocket_moves(y_pos))
     return u
 
+def v(t):
+    return sträcka/t
 
 def um(t, y): #hastighetsvektor
     x_pos, y_pos, vx, vy = y
