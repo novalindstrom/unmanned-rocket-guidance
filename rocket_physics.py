@@ -1,5 +1,6 @@
 # This file will contain functions that do all calculations and logic - without simulations
 import numpy as np
+import matplotlib.pyplot as plt
 
 # ------------ Constants ---------------------
 k = 700 #m/s som kraft
@@ -8,10 +9,10 @@ k = 700 #m/s som kraft
 #   funktion som piloten (du) kan använda för att styra raketen i en önskad bana.
 
 R0 = [0,0] #startposition
-v0 = [0,0]
+v0 = [0.0, 0.0, 0.0, 0.0]
 c = 0.05 #kg/m
 Ang0 = (np.pi)/2 #startvinkel som ej får ändras innan 20m
-g = 9.18 # gravitation
+g = 9.81 # gravitation
 motortid = 10
 g = 9.82 #gravitation
 sträcka = 0 #tom variabel just nu
@@ -25,13 +26,13 @@ tspan = [0, 10]
 
 #retunerar massan beroende på förbränt bränsle
 def m(t): # motorn på 10 secunder förbränning, while eller bara en tillbaka?
-    if t in tspan:
+    if t <= 10:
         return 8 - 0.4*(t), -0.4   #retunerar massan just nu vid detta tidssteg + derivatan
 
     return 4 , 0 #retunerar massan när 10s har gått, då är förändringshastighet 0
 
-def uvec(t): 
-    u=np.zeros(2)
+def uvec(t):
+    u = np.zeros(2)
     u[0] = k * np.cos(rocket_moves(y_pos))
     u[1] = k * np.sin(rocket_moves(y_pos))
     return u
@@ -49,8 +50,7 @@ def um(t): #hastighetsvektor
     return
 
 
-#------------- Get steering angle -------------
-
+#-------------- Get steering angle -------------
 def rocket_moves(y_pos):
     if y_pos < 20:
         angle = np.pi / 2
@@ -59,14 +59,25 @@ def rocket_moves(y_pos):
 
     return angle
 
+#------------------ Rocket ODE ------------------
+def rocket_ODE(t, y):
+    der = np.zeros(4)
+    der[0] = v(t)[0]
+    der[1] = v(t)[1]
+
+    der[2] = F(t) + m(t) * uvec(t)[0]
+    der[3] = F(t) + m(t) * uvec(t)[1]
+
+    return der 
 
 
-# ------------ Numeric solver ----------------
+# -------------- Numeric solver -----------------
 def RK4_model(f, h, t, y0):
+    s = np.arange(0, 10 + h, h)
     y = np.zeros((len(t), len(y0)))
     y[0] = y0
 
-    for i in range(len(t) - 1):
+    for i in range(len(s) - 1):
         ti = t[i]
         yi = y[i]
         
@@ -77,6 +88,7 @@ def RK4_model(f, h, t, y0):
         y[i + 1] = yi + (h / 6.0) * (k1 + 2*k2 + 2*k3 + k4)
 
     return t, y
-
 # Anropas typ : 
-# t, y = RK4_model(ODE, steglängd, tspan, begynnelse villkoret)
+t, y = RK4_model(rocket_ODE, 0.05, tspan, v0)
+plt.plot(t, y, 'o-r')
+plt.show()
