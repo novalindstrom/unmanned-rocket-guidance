@@ -21,14 +21,50 @@ def RK4_model(f, h, t, y0):
 
     return t, y
 
+# ----------------- Angle ------------------
+def find_angle(x_goal, y_goal):
+    h = 0.01
+    t = np.arange(0, 25 + h, h)  
+    v0 = [0, 0, 0, 0]
+
+    low_bound = -np.pi / 2
+    high_bound = np.pi / 2
+
+    tolerance = 0.01
+    maximum_tries = 100
+
+    for i in range(maximum_tries): 
+        best_angle = (low_bound + high_bound) / 2
+        rf.curr_angle = best_angle
+
+        t, y = RK4_model(rf.rocket_ODE, h, t, v0)
+
+        x_values = y[:, 0]
+        y_values = y[:, 1]
+
+        y_at_goal = np.interp(x_goal, x_values, y_values)
+        diff = y_at_goal - y_goal
+
+        if abs(diff) < tolerance:
+            break
+        
+        if(diff > 0):
+            high_bound = best_angle
+
+        else: 
+            low_bound = best_angle
+
+    return best_angle
+    
 # -------------- Pyhon solver --------------
+rf.curr_angle = find_angle(80, 60)
+
 h = 0.1
 t = np.arange(0, 10 + h, h)
 v0 = [0, 0, 0, 0]
 
 t, y = RK4_model(rf.rocket_ODE, h, t, v0)
-
-sol = solve_ivp(rf.rocket_ODE, [0, 10], v0, t_eval=t, method="RK45")
+sol = solve_ivp(rf.rocket_ODE, [0, 25], v0, t_eval=t, method="RK45")
 
 plt.scatter([80], [60], color='red', s=70, label="Mål (80, 60)")
 plt.title("Simulering av raketens bana", fontsize=14)
