@@ -3,22 +3,27 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # -------------- Constants ---------------------
-# funktion av t och anger riktning och
-# fart av bränslet som skjuts ut från raketen. Vi kan anta att ¯u(t) är en känd
-# funktion som piloten (du) kan använda för att styra raketen i en önskad bana.
+
 k = 700 # m/s som kraft
 c = 0.05 # kg/m
-g = 9.81 # gravitation
-motortid = 10
 g = 9.82 #gravitation
-sträcka = 0 #tom variabel just nu
-
+curr_angle = 0 #nuvarande vinkeln
 # ------------ Helper - functions -------------
-def m(t): # motorn på 10 secunder förbränning, while eller bara en tillbaka?
-    if t <= 10:
-        return 8 - 0.4*(t), -0.4   #retunerar massan just nu vid detta tidssteg + derivatan
 
-    return 4, 0 #retunerar massan när 10s har gått, då är förändringshastighet 0
+def m(t): 
+    if t <= 10:
+        return 8 - 0.4*(t), -0.4  
+
+    return 4, 0 
+
+
+# Bestämmer raketens styrvinkel i radianer utifrån dess höjd y. 
+# Så länge raketen befinner sig under 20 meters höjd returneras np.pi / 2
+def rocket_moves(y_pos):
+    if y_pos < 20:
+        return np.pi / 2
+    else: 
+        return curr_angle 
 
 def uvec(t, y):
     y_pos = y[1]
@@ -27,26 +32,9 @@ def uvec(t, y):
     u[1] = k * np.sin(rocket_moves(y_pos))
     return u
 
-
-def um(t, y): #hastighetsvektor
-    x_pos, y_pos, vx, vy = y
+def um(t, y):
+    x_pos, y_pos, vx, vy = y # hämta tillståndsvektor
     return np.sqrt(vx** 2 + vy**2)
-
-
-#-------------- Get steering angle --------------
-def get_angle(x_pos, y_pos):
-    x_pos, y_pos, vx, vy = y 
-    
-
-
-def rocket_moves(y_pos):
-    if y_pos < 20:
-        angle = np.pi / 2
-    else:
-        #angle = np.pi / 34 # Change later
-        angle = np.pi / 12
-
-    return angle
 
 #------------------ Rocket ODE ------------------
 def rocket_ODE(t, y):
