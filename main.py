@@ -6,6 +6,28 @@ from scipy.integrate import solve_ivp
 
 # -------------- Numeric solver -----------------
 def RK4_model(f, h, t, y0):
+    """
+    A numeric solver using the Runge-Kutta 4 method. 
+
+    Parameters
+    ----------
+    f : called function
+        The ODE function as f(t,y)
+        
+    h : float
+        The time step between t(i) and t(i+1)
+        
+    t : array
+        Contaning start and end time
+        
+    y0 : array
+        starting position vector for y
+        
+    Returns
+    -------
+    array
+        Each row or column represents the state at the corresponding time point.
+    """
     y = np.zeros((len(t), len(y0)))
     y[0] = y0
 
@@ -23,6 +45,23 @@ def RK4_model(f, h, t, y0):
 
 # ----------------- Angle ------------------
 def find_angle(x_goal, y_goal):
+    """
+    Simulates tests from rockets position to find the angle that hits target. 
+
+    Parameters
+    ----------
+    x_goal : float
+        The coordinate for x that the rocket should hit
+    y_goal : float
+        The coordinate for y that the rocket should hit
+
+        
+    Returns
+    -------
+    float
+        The angle that will cause the rocket to hit the target.
+    """
+    
     h = 0.01
     t = np.arange(0, 25 + h, h)  
     v0 = [0, 0, 0, 0]
@@ -72,8 +111,8 @@ plt.xlabel("")
 plt.ylabel("höjd (m)")
 plt.xlim(0, 700)
 plt.ylim(0, 200)
-plt.legend()
 plt.grid(True)
 plt.plot(y[:, 0], y[:, 1], "-b", label="Raketens bana")
 plt.plot(sol.y[0], sol.y[1], "--g", linewidth=2, label="SciPy solve_ivp")
+plt.legend()
 plt.show()
